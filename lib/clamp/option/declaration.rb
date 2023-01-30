@@ -2,6 +2,7 @@
 
 require "clamp/attribute/declaration"
 require "clamp/option/definition"
+require "clamp/header/definition"
 
 module Clamp
   module Option
@@ -17,6 +18,12 @@ module Clamp
           block ||= option.default_conversion_block
           define_accessors_for(option, &block)
           declared_options << option
+        end
+      end
+
+      def option_header(title, opts = {}, &block)
+        Heading::Definition.new(title, opts).tap do |header|
+          declared_options << header
         end
       end
 

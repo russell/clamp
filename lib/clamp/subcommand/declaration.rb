@@ -2,6 +2,7 @@
 
 require "clamp/errors"
 require "clamp/subcommand/definition"
+require "clamp/header/definition"
 
 module Clamp
   module Subcommand
@@ -18,6 +19,12 @@ module Clamp
         subcommand_class = Class.new(subcommand_class, &block) if block
         declare_subcommand_parameters unless has_subcommands?
         recognised_subcommands << Subcommand::Definition.new(name, description, subcommand_class)
+      end
+
+      def subcommand_header(title, opts = {}, &block)
+        Heading::Definition.new(title, opts).tap do |header|
+          recognised_subcommands << header
+        end
       end
 
       def has_subcommands?

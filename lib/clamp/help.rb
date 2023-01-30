@@ -101,6 +101,10 @@ module Clamp
         line
         line "#{heading}:"
         items.reject { |i| i.respond_to?(:hidden?) && i.hidden? }.each do |item|
+          if item.respond_to?(:help_header)
+            line(item.help_header)
+            next
+          end
           label, description = item.help
           description.each_line do |line|
             row(label, line)
